@@ -33,7 +33,8 @@ ENV PATH /home/containeruser/conda/bin:$PATH
 # install dependencies
 
 RUN pip install numpy && \
-    pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html
+    pip install --pre torch torchvision -f https://download.pytorch.org/whl/nightly/cu102/torch_nightly.html && \
+    pip install optuna
 
 RUN git clone https://github.com/PyTorchLightning/pytorch-lightning.git --single-branch --branch $LIGHTNING_VERSION && \
     pip install ./pytorch-lightning && \

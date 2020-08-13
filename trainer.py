@@ -12,7 +12,7 @@ from mlp import MLP
 seed_everything(234)
 
 
-def main(args):
+def train(args):
     """ Main training routine specific for this project. """
     # ------------------------
     # 1 INIT a model and the LIGHTNING Experiment class
@@ -31,13 +31,15 @@ def main(args):
     trainer.fit(experiment)
 
 
-def run_cli():
+def add_args(parent_parser=None):
     # ------------------------
     # TRAINING ARGUMENTS
     # ------------------------
     # these are project-wide arguments
+    if parent_parser is None:
+        parent_parser = ArgumentParser(add_help=True)
+
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    parent_parser = ArgumentParser(add_help=True)
     parser = parent_parser
 
     # each LightningModule defines arguments relevant to it
@@ -45,13 +47,19 @@ def run_cli():
     parser = ImageClassificationExperiment.add_experiment_specific_args(parser, root_dir)
     parser = Trainer.add_argparse_args(parser)
     parser.set_defaults(gpus=1)
+    return parser
+
+
+def main():
+    # Adding model, training and optimization arguments
+    parser = add_args()
     args = parser.parse_args()
 
     # ---------------------
     # RUN TRAINING
     # ---------------------
-    main(args)
+    train(args)
 
 
 if __name__ == '__main__':
-    run_cli()
+    main()

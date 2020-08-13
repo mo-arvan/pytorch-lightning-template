@@ -179,13 +179,13 @@ class ImageClassificationExperiment(LightningModule):
 
         # data
         parser.add_argument('--data_root', default=os.path.join(root_dir, 'cifar10'), type=str)
-        parser.add_argument('--num_workers', default=0, type=int)
+        parser.add_argument('--num_workers', default=8, type=int)
 
         # optimization hyperparameters
-        parser.add_argument('--epochs', default=20, type=int)
+        parser.add_argument('--epochs', default=50, type=int)
         parser.add_argument('--optimizer_name', default='adam', type=str)
         parser.add_argument('--learning_rate', default=0.001, type=float)
-        parser.add_argument('--train_batch_size', default=64, type=int)
-        parser.add_argument('--eval_batch_size', default=128, type=int)
+        parser.add_argument('--train_batch_size', default=1024 * 8, type=int)
+        parser.add_argument('--eval_batch_size', default=1024 * 8, type=int)
 
         return parser

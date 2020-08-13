@@ -5,13 +5,13 @@ import torch.nn as nn
 
 
 class MLP(nn.Module):
-    def __init__(self, drop_prob: float = 0.2, in_features: int = 28 * 28,
+    def __init__(self, dropout_prob: float = 0.2, in_features: int = 28 * 28,
                  out_features: int = 10, hidden_dim: int = 1000,
                  **kwargs
                  ):
         super().__init__()
 
-        self.drop_prob = drop_prob
+        self.dropout_prob = dropout_prob
         self.in_features = in_features
         self.out_features = out_features
         self.hidden_dim = hidden_dim
@@ -19,7 +19,7 @@ class MLP(nn.Module):
         self.c_d1 = nn.Linear(in_features=self.in_features,
                               out_features=self.hidden_dim)
         self.c_d1_bn = nn.BatchNorm1d(self.hidden_dim)
-        self.c_d1_drop = nn.Dropout(self.drop_prob)
+        self.c_d1_drop = nn.Dropout(self.dropout_prob)
 
         self.c_d2 = nn.Linear(in_features=self.hidden_dim,
                               out_features=self.out_features)
@@ -42,6 +42,6 @@ class MLP(nn.Module):
         # network params
         parser.add_argument('--in_features', default=32 * 32 * 3, type=int)
         parser.add_argument('--out_features', default=10, type=int)
-        parser.add_argument('--hidden_dim', default=500, type=int)
-        parser.add_argument('--drop_prob', default=0.2, type=float)
+        parser.add_argument('--hidden_dim', default=512 * 16, type=int)
+        parser.add_argument('--dropout_prob', default=0.2, type=float)
         return parser
